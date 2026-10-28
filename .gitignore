@@ -17,3 +17,7 @@ mlflow.db
 mlruns/
 gx/uncommitted/
 jour3/projet_integre/corrige_brief_A/gx/uncommitted/
+
+# Contexte Great Expectations du projet : régénéré à chaque exécution par le code,
+# et contient les listes d identifiants des contrôles d intégrité -> jamais dans Git
+jour3/projet_integre/gx/
