@@ -1,0 +1,5 @@
+[core]
+    analytics = false
+    remote = stockage_local
+['remote "stockage_local"']
+    url = /home/faiza/dvc_remote_nexapay
