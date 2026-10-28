@@ -1,0 +1,43 @@
+# Politique d'accès aux données — projet « Fraude : signaux comportementaux » (adaptée du TP2)
+# Principe : moindre privilège. IP complètes, coordonnées GPS et identifiants en clair ne quittent pas la zone RAW.
+
+roles:
+  data_engineer:
+    description: Construit et maintient le pipeline
+    zones: [raw, staging, curated]
+    pii_direct: true          # nécessaire au traitement, accès journalisé
+  data_scientist:
+    description: Entraîne le modèle de fraude (Direction des Risques)
+    zones: [curated]
+    pii_direct: false         # pseudonymes et features agrégées uniquement
+  analyste_fraude:
+    description: Investigation des alertes
+    zones: [staging, curated]
+    pii_direct: false         # ré-identification uniquement via procédure DPO
+  dpo:
+    description: Délégué à la protection des données
+    zones: [raw, staging, curated]
+    pii_direct: true
+
+zones:
+  raw:
+    tables: [raw_transactions, raw_fraud_labels, raw_sessions, raw_merchants]
+    retention_jours: 90
+  staging:
+    tables: [stg_transactions, stg_sessions, stg_fraud_labels, stg_merchants, quarantine]
+    retention_jours: 365
+  curated:
+    tables: [ml_fraud_features]
+    retention_jours: 1825     # 5 ans : obligation LCB-FT / traçabilité des modèles
+
+base_legale:
+  raw_transactions: Obligation légale (LCB-FT) + intérêt légitime (lutte contre la fraude)
+  raw_fraud_labels: Intérêt légitime (lutte contre la fraude)
+  raw_sessions: Intérêt légitime (sécurité des comptes et lutte contre la fraude)
+  raw_merchants: Exécution du contrat (partenaires)
+
+responsables:
+  raw_transactions: Direction des Opérations
+  raw_fraud_labels: Direction des Risques
+  raw_sessions: Direction Digitale (application mobile)
+  raw_merchants: Direction Partenariats

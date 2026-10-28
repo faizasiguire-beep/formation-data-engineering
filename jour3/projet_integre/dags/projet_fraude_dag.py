@@ -5,7 +5,8 @@
                                    collecte_labels ───┼─► qualite_entree ─► build_features ─► qualite_sortie
                                    collecte_sessions ─┘     (diagnostic)     (pseudonymisation)  (BLOQUANT)
                                                                                                     │
-                                                              fin ◄─ bilan_run ◄─ export_snapshot ◄─┘
+                                                              fin ◄─ bilan_run ◄─┬─ export_snapshot ◄─┤
+                                                                                 └─ catalogue ◄───────┘
 
 Principes (repris du TP3) :
   * AUCUN secret ni chemin machine : identifiants API dans la Connection `nexa_api`, clé de pseudonymisation
@@ -129,9 +130,11 @@ with DAG(
     qualite_sortie = BashOperator(task_id="qualite_sortie", bash_command=f"{PY} {SRC}/quality_out.py",
                                   pool="entrepot_sqlite", cwd=ROOT, retries=0)   # contrôle BLOQUANT
     export_snapshot = BashOperator(task_id="export_snapshot", bash_command=f"{PY} {SRC}/export_snapshot.py", cwd=ROOT)
+    catalogue = BashOperator(task_id="catalogue", bash_command=f"{PY} {SRC}/catalog.py",
+                             pool="entrepot_sqlite", cwd=ROOT)
     bilan_run = PythonOperator(task_id="bilan_run", python_callable=bilan)
     fin = EmptyOperator(task_id="fin")
 
     api_disponible >> sante_api >> collecte["api"]
     list(collecte.values()) >> qualite_entree >> build_features >> qualite_sortie
-    qualite_sortie >> export_snapshot >> bilan_run >> fin
+    qualite_sortie >> [export_snapshot, catalogue] >> bilan_run >> fin
