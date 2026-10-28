@@ -1,0 +1,19 @@
+# Secrets — ne JAMAIS commiter
+.env
+
+# Environnements
+.venv/
+.venv-airflow/
+*.egg-info/
+__pycache__/
+.pytest_cache/
+
+# Données générées (versionnées par DVC, pas par Git)
+/data/
+/logs/
+/reports/
+/airflow_home/
+mlflow.db
+mlruns/
+gx/uncommitted/
+jour3/projet_integre/corrige_brief_A/gx/uncommitted/

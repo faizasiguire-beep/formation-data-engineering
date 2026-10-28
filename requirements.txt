@@ -1,0 +1,35 @@
+# Environnement "data" du module (Python 3.11, 3.12 ou 3.13). Versions testées entre parenthèses.
+# Installation : python -m venv .venv && activer && pip install -r requirements.txt && pip install -e .
+# Airflow s'installe dans un environnement SÉPARÉ : cf. jour2/TP3_airflow/ENONCE.md
+
+# Données & bases
+pandas>=2.2           # (3.0.6)
+numpy>=1.26           # (2.5.4)
+pyarrow>=15           # (25.0.1) lecture/écriture Parquet
+SQLAlchemy>=2.0       # (2.1.5)
+tabulate>=0.9         # (0.10.0) tableaux Markdown des rapports
+
+# Collecte & API simulée
+requests>=2.31        # (2.34.2)
+tenacity>=8.2         # (9.2.1) alternative déclarative au retry "fait main"
+fastapi>=0.110        # (0.146.0)
+uvicorn>=0.29         # (0.54.0)
+python-multipart>=0.0.9  # (0.0.32) formulaires OAuth2
+python-dotenv>=1.0    # (1.2.4)
+PyYAML>=6.0           # (6.0.3)
+
+# Qualité & conformité
+great_expectations>=1.5,<2   # (1.24.0) API "GX Core 1.x" (incompatible avec les tutoriels 0.x)
+Faker>=24             # (40.43.0)
+
+# Versioning & tracking
+dvc>=3.50             # (3.67.1)
+mlflow>=3.0           # (3.17.1)
+scikit-learn>=1.4     # (1.9.1) baseline du TP4
+
+# Streaming
+confluent-kafka>=2.4  # (2.16.0) utilisé seulement si STREAM_BACKEND=kafka
+pyspark>=4.0          # (4.2.0) démonstration Spark Structured Streaming — nécessite Java 17+
+
+# Tests
+pytest>=8             # (9.1.1)

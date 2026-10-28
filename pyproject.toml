@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fil-rouge-nexapay"
+version = "1.0.0"
+description = "Socle commun du module Data Engineering (Mastère 2 Data & IA) - fil rouge NexaPay"
+requires-python = ">=3.10"
+
+[tool.setuptools.packages.find]
+include = ["fil_rouge*", "mock_api*"]

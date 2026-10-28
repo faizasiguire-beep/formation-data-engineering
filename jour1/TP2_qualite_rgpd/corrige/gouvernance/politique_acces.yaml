@@ -1,0 +1,44 @@
+# Politique d'accès aux données — NexaPay (version pédagogique)
+# Validée par : DPO (protection des données) et RSSI (sécurité du SI)
+# Principe : moindre privilège. Les données personnelles DIRECTES ne quittent pas la zone RAW.
+
+roles:
+  data_engineer:
+    description: Construit et maintient les pipelines
+    zones: [raw, staging, curated]
+    pii_direct: true          # nécessaire au traitement, accès journalisé
+  data_scientist:
+    description: Entraîne les modèles de fraude
+    zones: [curated]
+    pii_direct: false         # uniquement des données pseudonymisées / généralisées
+  analyste_risque:
+    description: Investigation des alertes de fraude
+    zones: [staging, curated]
+    pii_direct: false         # ré-identification uniquement via procédure DPO
+  dpo:
+    description: Délégué à la protection des données
+    zones: [raw, staging, curated]
+    pii_direct: true
+
+zones:
+  raw:
+    tables: [raw_customers, raw_transactions, raw_merchants, raw_merchant_blacklist]
+    retention_jours: 90
+  staging:
+    tables: [stg_customers, stg_transactions, stg_merchants]
+    retention_jours: 365
+  curated:
+    tables: [ml_transactions_features]
+    retention_jours: 1825     # 5 ans : obligation LCB-FT
+
+base_legale:
+  raw_customers: Exécution du contrat + obligation légale KYC
+  raw_transactions: Obligation légale (LCB-FT) + intérêt légitime (lutte contre la fraude)
+  raw_merchants: Exécution du contrat (partenaires)
+  raw_merchant_blacklist: Obligation légale + intérêt légitime
+
+responsables:
+  raw_customers: Direction Clients
+  raw_transactions: Direction des Opérations
+  raw_merchants: Direction Partenariats
+  raw_merchant_blacklist: Conformité
