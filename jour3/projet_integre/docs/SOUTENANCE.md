@@ -1,16 +1,19 @@
 # Guide de soutenance (10 min + 5 min de questions)
 
-## Déroulé proposé
+## Déroulé (plan imposé par le professeur)
 
-| Temps | Contenu | Support |
+> **Le texte complet à dire, mot pour mot, réparti entre les 4 intervenants, est dans
+> [`ORAL_SOUTENANCE.md`](ORAL_SOUTENANCE.md)** (≈ 1 300 mots, soit environ 10 minutes). Ce fichier-ci ne garde que la
+> préparation de la démo et les réponses aux questions du jury.
+
+| Temps | Partie | Qui |
 |---|---|---|
-| 0:00 – 1:00 | Le besoin : la Direction des Risques veut détecter la fraude grâce au comportement dans l'application | Brief |
-| 1:00 – 2:30 | Architecture : 4 sources dont 1 nouvelle (Parquet), zones RAW → staging → curated | Schéma du README |
-| 2:30 – 5:00 | **Démo** : DAG dans l'UI Airflow (vue Graph, run au vert, logs d'une tâche) | `airflow standalone` |
-| 5:00 – 6:30 | Qualité : diagnostic d'entrée vs contrôle bloquant de sortie, quarantaine | `reports/projet_fraude/*.md` |
-| 6:30 – 8:00 | Conformité : pseudonymisation cohérente, IP/GPS absents, registre, catalogue | `docs/` |
-| 8:00 – 9:00 | Versioning : `data-v1` → `data-v2`, retour exact à la v1 | `dvc diff`, `git checkout data-v1` |
-| 9:00 – 10:00 | Valeur métier : PR-AUC 0,054 → 0,593 ; limites et suites | `apport_features_sessions.json` |
+| 0:00 → 1:00 | Besoin et sources | [Prénom 1] |
+| 1:00 → 4:00 | Architecture et démonstration | [Prénom 2] |
+| 4:00 → 6:00 | Une panne provoquée et sa reprise dans Airflow | [Prénom 3] |
+| 6:00 → 8:00 | Conformité : ce qui sort, ce qui ne sort pas | [Prénom 4] |
+| 8:00 → 9:00 | Versions DVC et reproduction de la v1 | [Prénom 4] |
+| 9:00 → 10:00 | Limites et suites | [Prénom 1] |
 
 ## Démonstration (à préparer avant de passer)
 
