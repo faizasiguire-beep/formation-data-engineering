@@ -1,0 +1,19 @@
+# Paramètres du projet « Fraude : signaux comportementaux de l'application mobile ».
+# Versionnés avec Git ; toute modification est visible dans l'historique (git diff, dvc params diff).
+
+collecte:
+  chunksize: 20000                 # lecture par morceaux de la base core banking
+  colonnes_sessions:               # lecture sélective du Parquet (minimisation dès la collecte)
+    [session_id, customer_id, device_id, os, app_version, ip_address, latitude, longitude, login_at, duration_s]
+
+features:
+  fenetre_sessions_h: 24           # nb de sessions dans les N heures PRÉCÉDANT la transaction
+  fenetre_appareils_j: 7           # nb d'appareils distincts vus en session sur N jours
+  plafond_minutes: 10080           # « minutes depuis la dernière session » plafonné à 7 jours (pas de session = plafond)
+  heures_nuit: [0, 1, 2, 3, 4]
+  fenetres_velocite: ["1h", "24h"] # nb de transactions du client dans la fenêtre passée (repris du TP4)
+
+qualite:
+  fraicheur_max_h: 24              # dernière transaction de moins de 24 h (contrainte du brief)
+  completude_min: 0.99             # complétude des features ≥ 99 % (contrainte du brief)
+  recouvrement_pseudo_min: 0.99    # part des clients des transactions retrouvés dans les sessions (pseudonymes cohérents)
