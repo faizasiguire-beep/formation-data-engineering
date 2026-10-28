@@ -25,7 +25,9 @@ python "$P/src/export_snapshot.py" > /dev/null          # instantané détermini
 dvc add "$SNAP"                                         # hash + copie dans le cache DVC
 LIGNES=$(python -c "import json; m=json.load(open('$SNAP/MANIFEST.json')); print(m['lignes'], 'lignes,', m['fraudes'], 'fraudes')")
 git add "$SNAP.dvc" "$P/data/.gitignore"
-git commit -qm "data: $TAG — $DESC ($LIGNES)"
+git commit -qm "data: $TAG — $DESC ($LIGNES)${COMMIT_TRAILER:+
+
+$COMMIT_TRAILER}"
 git tag -a "$TAG" -m "$DESC ($LIGNES)"
 dvc push                                                # envoi vers le stockage distant
 echo "✔ $TAG : $LIGNES — commit $(git rev-parse --short HEAD), hash DVC $(grep -m1 'md5' "$SNAP.dvc" | awk '{print $3}')"
